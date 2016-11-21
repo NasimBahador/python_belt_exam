@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Travels</title>
+  </head>
+  <body>
+    <a href="{% url 'main:logout' %}"><button>Logout</button></a>
+    <h3>Hello, {{ user.name }}</h3>
+    <h4>Your Trip Schedules</h4>
+    <table><!--your trip-->
+      <tr>
+        <th>Destination</th>
+        <th>Travel Start Date</th>
+        <th>Travel End Date</th>
+        <th>Plan</th>
+      </tr>
+      {% for trip in user_trips %}
+      <tr>
+        <td><a href="{% url 'main:destination' id=trip.id %}">{{ trip.destination }}</a></td>
+        <td>{{ trip.start_date }}</td>
+        <td>{{ trip.end_date }}</td>
+        <td>{{ trip.description }}</td>
+      </tr>
+      {% endfor %}
+    </table><!--your trip-->
+
+    <h4>Other User's Travel Plans</h4>
+    <table><!--other user's travel plans-->
+      <tr>
+        <th>Name</th>
+        <th>Destination</th>
+        <th>Travel Start Date</th>
+        <th>Travel End Date</th>
+        <th>Do You Want To Join?</th>
+      </tr>
+      {% for trip in trips  %}
+      <tr>
+        <td>{{ trip.trip_creator.name }}</td>
+        <td><a href="{% url 'main:destination' id=trip.id %}">{{ trip.destination }}</a></td>
+        <td>{{ trip.start_date }}</td>
+        <td>{{ trip.end_date}}</td>
+        <td><a href="{% url 'main:join' id=trip.id %} ">Join</a></td>
+      </tr>
+      {% endfor %}
+    </table><!--other user's travel plans-->
+    <a href="{% url 'main:add_trip' %}">Add Travel Plan</a>
+  </body>
+</html>
